@@ -137,3 +137,15 @@
   - Replaced solid grey with ultra-translucent frosted glass: `rgba(12, 12, 20, 0.45)`, `backdrop-filter: blur(28px) saturate(190%)`, delicate silver top border inset, and soft champagne gold ambient hover glow.
   - The interactive constellation background canvas now shines through every card container.
 
+---
+
+## [2026-08-30T21:29:00Z] - Unzoomed Proportional 3D Cameras & Luminous Frosted Glass
+- **3D Scale & Unzoom Tuning**:
+  - `ThreeGlobe.tsx`: Scaled down globe radius from `7.8` to `5.8` and set camera to `(0, 0, 25)` looking at origin, providing ample breathing room around the sphere and its gold orbital rings.
+  - `ThreeTopology.tsx`: Scaled asset node meshes from `0.6` to `0.52` and backed up camera to `(0, 6.8, 16.0)` looking at `(0, 0.2, 0)`, giving full visibility of all network zones with generous margins.
+- **Enhanced Luminous Frosted Glass (`.soc-card`)**:
+  - Implemented multi-layered glass gradient: `linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 20, 32, 0.45) 40%, rgba(10, 10, 18, 0.6) 100%)`.
+  - Added specular edge reflections (`inset 0 1px 1px rgba(255, 255, 255, 0.35)`), `backdrop-filter: blur(24px) saturate(200%)`, and translucent background panels.
+  - `InteractiveBackground.tsx`: Added glowing gold & silver ambient orbs and richer particle connections to produce a visible blurred light effect behind every card container.
+
+

@@ -24,9 +24,10 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
+    // Backed up camera for ideal unzoomed framing
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 4.2, 11);
-    camera.lookAt(0, 0.4, 0);
+    camera.position.set(0, 6.8, 16.0);
+    camera.lookAt(0, 0.2, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
@@ -35,12 +36,12 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
     rendererRef.current = renderer;
 
     const topGroup = new THREE.Group();
-    topGroup.position.set(0, 0.4, 0);
+    topGroup.position.set(0, 0.3, 0);
     scene.add(topGroup);
 
     // 1. Grid plane (Gold & Dark Charcoal)
-    const gridHelper = new THREE.GridHelper(14, 20, 0xd4af37, 0x222233);
-    gridHelper.position.y = -1.8;
+    const gridHelper = new THREE.GridHelper(13, 18, 0xd4af37, 0x222233);
+    gridHelper.position.y = -1.6;
     topGroup.add(gridHelper);
 
     // 2. Asset Meshes
@@ -51,7 +52,7 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
       const colorHex = isAttacked ? 0xff3366 : (asset.role === 'FIREWALL' ? 0xd4af37 : 0xe2e8f0);
 
       // Main Node Octahedron
-      const geo = new THREE.OctahedronGeometry(0.6);
+      const geo = new THREE.OctahedronGeometry(0.52);
       const mat = new THREE.MeshStandardMaterial({
         color: colorHex,
         emissive: colorHex,
@@ -64,7 +65,7 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
       topGroup.add(mesh);
 
       // Outer Pulsing Ring
-      const haloGeo = new THREE.RingGeometry(0.78, 0.9, 32);
+      const haloGeo = new THREE.RingGeometry(0.68, 0.78, 32);
       const haloMat = new THREE.MeshBasicMaterial({
         color: colorHex,
         side: THREE.DoubleSide,
@@ -107,11 +108,11 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
     });
 
     // 4. Lighting (Warm Gold Light)
-    const ambLight = new THREE.AmbientLight(0xffffff, 0.75);
+    const ambLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambLight);
 
-    const pointLight = new THREE.PointLight(0xd4af37, 2.5, 50);
-    pointLight.position.set(0, 5, 5);
+    const pointLight = new THREE.PointLight(0xd4af37, 2.8, 50);
+    pointLight.position.set(0, 6, 6);
     scene.add(pointLight);
 
     // 5. Animation Loop

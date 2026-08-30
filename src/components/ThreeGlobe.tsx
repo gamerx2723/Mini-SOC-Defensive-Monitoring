@@ -28,7 +28,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
     const container = containerRef.current;
     if (!container) return;
 
-    // 1. Scene & Camera Setup - Centered directly at origin
+    // 1. Scene & Camera Setup - Backed up camera for ideal unzoomed framing
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
@@ -36,7 +36,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
     const height = container.clientHeight || 450;
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 0, 21.5);
+    camera.position.set(0, 0, 25);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -49,7 +49,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
     }
     container.appendChild(renderer.domElement);
 
-    // 2. Globe Group - Centered at (0, 0, 0)
+    // 2. Globe Group - Proportional radius (5.8) for clear unzoomed visibility
     const globeGroup = new THREE.Group();
     globeGroup.position.set(0, 0, 0);
     globeGroupRef.current = globeGroup;
@@ -59,32 +59,32 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
     arcsGroupRef.current = arcsGroup;
     globeGroup.add(arcsGroup);
 
-    const RADIUS = 7.8;
+    const RADIUS = 5.8;
 
     // Wireframe Sphere (Metallic Dark Silver / Charcoal)
-    const sphereGeo = new THREE.SphereGeometry(RADIUS, 36, 36);
+    const sphereGeo = new THREE.SphereGeometry(RADIUS, 32, 32);
     const sphereMat = new THREE.MeshStandardMaterial({
-      color: 0x28283c,
-      emissive: 0x0e0e1a,
+      color: 0x2e2e42,
+      emissive: 0x121220,
       wireframe: true,
       transparent: true,
-      opacity: 0.4
+      opacity: 0.45
     });
     const sphere = new THREE.Mesh(sphereGeo, sphereMat);
     globeGroup.add(sphere);
 
-    // Inner Core (Deep Obsidian Glow)
-    const innerGeo = new THREE.SphereGeometry(RADIUS * 0.97, 28, 28);
+    // Inner Core (Obsidian glow)
+    const innerGeo = new THREE.SphereGeometry(RADIUS * 0.97, 24, 24);
     const innerMat = new THREE.MeshBasicMaterial({
-      color: 0x06060c,
+      color: 0x080812,
       transparent: true,
-      opacity: 0.85
+      opacity: 0.88
     });
     const innerCore = new THREE.Mesh(innerGeo, innerMat);
     globeGroup.add(innerCore);
 
     // 3. Dot particle grid representing global continents / nodes (Bright Gold & Silver)
-    const particleCount = 800;
+    const particleCount = 750;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -94,7 +94,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
       const v = Math.random();
       const theta = u * 2.0 * Math.PI;
       const phi = Math.acos(2.0 * v - 1.0);
-      const r = RADIUS * 1.01;
+      const r = RADIUS * 1.015;
 
       const x = r * Math.sin(phi) * Math.cos(theta);
       const y = r * Math.sin(phi) * Math.sin(theta);
@@ -107,13 +107,13 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
       // Gold & Silver particles
       const isGold = Math.random() > 0.4;
       if (isGold) {
-        colors[i * 3] = 0.88;     // R (Gold)
-        colors[i * 3 + 1] = 0.74; // G
-        colors[i * 3 + 2] = 0.25; // B
+        colors[i * 3] = 0.95;     // R (Gold)
+        colors[i * 3 + 1] = 0.80; // G
+        colors[i * 3 + 2] = 0.28; // B
       } else {
-        colors[i * 3] = 0.92;     // R (Silver)
-        colors[i * 3 + 1] = 0.94;
-        colors[i * 3 + 2] = 0.98;
+        colors[i * 3] = 0.94;     // R (Silver)
+        colors[i * 3 + 1] = 0.95;
+        colors[i * 3 + 2] = 1.0;
       }
     }
 
@@ -121,35 +121,35 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
     particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const pMat = new THREE.PointsMaterial({
-      size: 0.22,
+      size: 0.24,
       vertexColors: true,
       transparent: true,
-      opacity: 0.92
+      opacity: 0.95
     });
     const pointGrid = new THREE.Points(particleGeo, pMat);
     globeGroup.add(pointGrid);
 
     // 4. Outer Orbital Gold Rings
-    const ringGeo = new THREE.RingGeometry(RADIUS * 1.22, RADIUS * 1.25, 64);
+    const ringGeo = new THREE.RingGeometry(RADIUS * 1.25, RADIUS * 1.28, 64);
     const ringMat = new THREE.MeshBasicMaterial({
       color: 0xd4af37,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.3
+      opacity: 0.35
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = Math.PI / 2.3;
     globeGroup.add(ring);
 
     // 5. Lighting (Warm Gold Light + Crisp White Fill)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const goldDirLight = new THREE.DirectionalLight(0xd4af37, 1.8);
+    const goldDirLight = new THREE.DirectionalLight(0xd4af37, 2.0);
     goldDirLight.position.set(20, 20, 20);
     scene.add(goldDirLight);
 
-    const silverBackLight = new THREE.DirectionalLight(0xe2e8f0, 1.2);
+    const silverBackLight = new THREE.DirectionalLight(0xe2e8f0, 1.4);
     silverBackLight.position.set(-20, -10, -20);
     scene.add(silverBackLight);
 
@@ -227,11 +227,11 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
       arcsGroup.remove(obj);
     }
 
-    const RADIUS = 7.8;
+    const RADIUS = 5.8;
     const destVec = latLngToVector3(37.7749, -122.4194, RADIUS); // SOC HQ
 
     // Destination Pin (SOC HQ - Gold Beacon)
-    const hqGeo = new THREE.SphereGeometry(0.35, 16, 16);
+    const hqGeo = new THREE.SphereGeometry(0.28, 16, 16);
     const hqMat = new THREE.MeshBasicMaterial({ color: 0xd4af37 });
     const hqMesh = new THREE.Mesh(hqGeo, hqMat);
     hqMesh.position.copy(destVec);
@@ -241,7 +241,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
       const srcVec = latLngToVector3(arc.sourceLat, arc.sourceLng, RADIUS);
 
       // Source Threat Pin
-      const srcGeo = new THREE.SphereGeometry(0.25, 16, 16);
+      const srcGeo = new THREE.SphereGeometry(0.22, 16, 16);
       const colorHex = arc.severity === 'critical' ? 0xff3366 : (arc.severity === 'high' ? 0xf59e0b : 0xd4af37);
       const srcMat = new THREE.MeshBasicMaterial({ color: colorHex });
       const srcMesh = new THREE.Mesh(srcGeo, srcMat);
@@ -251,7 +251,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
       // Arc curve in 3D
       const midVec = new THREE.Vector3().addVectors(srcVec, destVec).multiplyScalar(0.5);
       const distance = srcVec.distanceTo(destVec);
-      midVec.normalize().multiplyScalar(RADIUS + distance * 0.32);
+      midVec.normalize().multiplyScalar(RADIUS + distance * 0.35);
 
       const curve = new THREE.QuadraticBezierCurve3(srcVec, midVec, destVec);
       const points = curve.getPoints(30);
@@ -260,7 +260,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
       const curveMat = new THREE.LineBasicMaterial({
         color: colorHex,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.85,
         linewidth: 2
       });
 
@@ -272,7 +272,7 @@ export const ThreeGlobe: React.FC<ThreeGlobeProps> = ({ attackArcs }) => {
 
   return (
     <div className="relative w-full h-[450px] soc-card overflow-hidden flex items-center justify-center p-2">
-      {/* 3D Canvas Viewport - Centered */}
+      {/* 3D Canvas Viewport - Centered & Unzoomed */}
       <div className="w-full h-full cursor-grab active:cursor-grabbing rounded-xl overflow-hidden flex items-center justify-center" ref={containerRef} />
 
       {/* Luxury HUD Overlay */}

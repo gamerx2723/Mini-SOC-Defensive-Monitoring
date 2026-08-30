@@ -16,7 +16,7 @@ export const InteractiveBackground: React.FC = () => {
   const mouseRef = useRef<{ x: number; y: number; radius: number }>({
     x: -1000,
     y: -1000,
-    radius: 180
+    radius: 200
   });
 
   useEffect(() => {
@@ -50,28 +50,28 @@ export const InteractiveBackground: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Particle Palette: Gold, Silver, Subtle Grey
+    // Particle Palette: Gold, Champagne Gold, Silver, Subtle White
     const particleColors = [
       'rgba(212, 175, 55, ', // Gold
       'rgba(245, 215, 127, ', // Light Champagne Gold
       'rgba(226, 232, 240, ', // Silver
-      'rgba(160, 160, 178, '  // Slate Grey
+      'rgba(255, 255, 255, '  // Crisp White
     ];
 
     let particles: Particle[] = [];
 
     const initParticles = () => {
       particles = [];
-      const particleCount = Math.floor((width * height) / 14000); // Responsive density
+      const particleCount = Math.floor((width * height) / 9500); // Richer particle density
 
       for (let i = 0; i < particleCount; i++) {
-        const baseAlpha = Math.random() * 0.45 + 0.15;
+        const baseAlpha = Math.random() * 0.55 + 0.25;
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          size: Math.random() * 1.8 + 0.8,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          size: Math.random() * 2.0 + 1.0,
           color: particleColors[Math.floor(Math.random() * particleColors.length)],
           alpha: baseAlpha,
           baseAlpha
@@ -81,29 +81,51 @@ export const InteractiveBackground: React.FC = () => {
 
     initParticles();
 
+    let time = 0;
+
     // Render loop
     const render = () => {
+      time += 0.005;
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Ambient mouse gold glow
+      // 1. Ambient Background Glow Orbs (Gold & Silver mesh)
+      const orb1X = width * 0.25 + Math.sin(time) * 80;
+      const orb1Y = height * 0.3 + Math.cos(time * 0.8) * 60;
+      const grad1 = ctx.createRadialGradient(orb1X, orb1Y, 0, orb1X, orb1Y, 450);
+      grad1.addColorStop(0, 'rgba(212, 175, 55, 0.09)');
+      grad1.addColorStop(0.6, 'rgba(212, 175, 55, 0.02)');
+      grad1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad1;
+      ctx.fillRect(0, 0, width, height);
+
+      const orb2X = width * 0.75 + Math.cos(time * 0.7) * 90;
+      const orb2Y = height * 0.65 + Math.sin(time) * 70;
+      const grad2 = ctx.createRadialGradient(orb2X, orb2Y, 0, orb2X, orb2Y, 500);
+      grad2.addColorStop(0, 'rgba(226, 232, 240, 0.07)');
+      grad2.addColorStop(0.6, 'rgba(160, 160, 190, 0.02)');
+      grad2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. Interactive Mouse Gold Light Aura
       if (mouseRef.current.x > 0 && mouseRef.current.y > 0) {
-        const radialGradient = ctx.createRadialGradient(
+        const mouseGradient = ctx.createRadialGradient(
           mouseRef.current.x,
           mouseRef.current.y,
           0,
           mouseRef.current.x,
           mouseRef.current.y,
-          320
+          280
         );
-        radialGradient.addColorStop(0, 'rgba(212, 175, 55, 0.05)');
-        radialGradient.addColorStop(0.5, 'rgba(212, 175, 55, 0.015)');
-        radialGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        mouseGradient.addColorStop(0, 'rgba(212, 175, 55, 0.14)');
+        mouseGradient.addColorStop(0.5, 'rgba(212, 175, 55, 0.04)');
+        mouseGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
-        ctx.fillStyle = radialGradient;
+        ctx.fillStyle = mouseGradient;
         ctx.fillRect(0, 0, width, height);
       }
 
-      // 2. Render and link particles
+      // 3. Render and link particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
@@ -123,10 +145,10 @@ export const InteractiveBackground: React.FC = () => {
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < mouseRef.current.radius) {
-          const force = (1 - dist / mouseRef.current.radius) * 0.8;
-          p.x -= (dx / dist) * force * 1.5;
-          p.y -= (dy / dist) * force * 1.5;
-          p.alpha = Math.min(1, p.baseAlpha + force * 0.7);
+          const force = (1 - dist / mouseRef.current.radius) * 0.85;
+          p.x -= (dx / dist) * force * 1.8;
+          p.y -= (dy / dist) * force * 1.8;
+          p.alpha = Math.min(1, p.baseAlpha + force * 0.65);
         } else {
           p.alpha = p.baseAlpha;
         }
@@ -142,13 +164,13 @@ export const InteractiveBackground: React.FC = () => {
           const p2 = particles[j];
           const distLinks = Math.hypot(p.x - p2.x, p.y - p2.y);
 
-          if (distLinks < 110) {
-            const linkAlpha = (1 - distLinks / 110) * 0.18;
+          if (distLinks < 125) {
+            const linkAlpha = (1 - distLinks / 125) * 0.28;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(212, 175, 55, ${linkAlpha})`;
-            ctx.lineWidth = 0.65;
+            ctx.lineWidth = 0.85;
             ctx.stroke();
           }
         }
@@ -172,7 +194,7 @@ export const InteractiveBackground: React.FC = () => {
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
       style={{
-        background: 'radial-gradient(ellipse 80% 80% at 50% -10%, #111118 0%, #06060a 60%, #000000 100%)'
+        background: 'radial-gradient(ellipse 90% 90% at 50% -10%, #0d0d16 0%, #050509 50%, #000000 100%)'
       }}
     />
   );
