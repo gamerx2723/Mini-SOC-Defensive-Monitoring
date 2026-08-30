@@ -120,7 +120,20 @@
   - `ThreeTopology.tsx`: Gold grid plane, octahedron defense nodes, and gold connection paths.
 - **Build Status**: Verified via `npm run build` with **0 errors**.
 
+---
 
+## [2026-08-30T21:21:00Z] - Standalone Vanilla CSS Grid & Utility Engine Fixed
+- **Issue**: Tailwind `@tailwind` directives in `src/index.css` were uncompiled due to direct Vite vanilla CSS usage.
+- **Resolution**: Implemented a complete, self-contained Vanilla CSS utility framework (grid system, flexbox, spacing, positioning, typography, badges, buttons, cards) without external build dependencies.
+- **Outcome**: The SOC X luxury dashboard now loads with layout styling, spacious cards, interactive background constellation, and custom cursor.
 
+---
 
+## [2026-08-30T21:26:00Z] - 3D Models Centered & Ultra-Frosted Glassmorphism
+- **3D Visualizer Centering**:
+  - `ThreeGlobe.tsx`: Reset camera perspective to `(0, 0, 21.5)` looking directly at `(0, 0, 0)`, increased container height to `450px`, enhanced particle point sizes (`0.22`) and gold/silver radiance so the entire Threat Globe is centered and visible.
+  - `ThreeTopology.tsx`: Elevated asset group position to `(0, 0.4, 0)` with camera at `(0, 4.2, 11)` looking at `(0, 0.4, 0)`, placing all defense nodes (Firewall, DMZ, Juice Shop, DB, Auth, SIEM) centered in the viewport above the bottom asset selector.
+- **Frosted Glass Glassmorphism (`.soc-card`)**:
+  - Replaced solid grey with ultra-translucent frosted glass: `rgba(12, 12, 20, 0.45)`, `backdrop-filter: blur(28px) saturate(190%)`, delicate silver top border inset, and soft champagne gold ambient hover glow.
+  - The interactive constellation background canvas now shines through every card container.
 

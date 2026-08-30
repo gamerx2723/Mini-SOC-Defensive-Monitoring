@@ -8,8 +8,8 @@
 :root {
   --bg-main: #040407;
   --bg-surface: #0a0a10;
-  --bg-card: rgba(14, 14, 22, 0.82);
-  --bg-card-hover: rgba(22, 22, 34, 0.92);
+  --bg-card: rgba(12, 12, 20, 0.42);
+  --bg-card-hover: rgba(20, 20, 32, 0.58);
 
   --text-primary: #ffffff;
   --text-secondary: #c4c4d6;
@@ -18,14 +18,14 @@
   --accent-gold: #d4af37;
   --accent-gold-light: #f5d77f;
   --accent-gold-dark: #9a7b20;
-  --accent-gold-glow: rgba(212, 175, 55, 0.25);
+  --accent-gold-glow: rgba(212, 175, 55, 0.3);
 
   --accent-silver: #e2e8f0;
   --accent-silver-dark: #94a3b8;
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.1);
   --border-card: rgba(255, 255, 255, 0.14);
-  --border-gold: rgba(212, 175, 55, 0.35);
+  --border-gold: rgba(212, 175, 55, 0.4);
 
   --status-critical: #ff3366;
   --status-high: #f59e0b;
@@ -74,7 +74,7 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(8, 8, 12, 0.9);
+  background: rgba(6, 6, 10, 0.7);
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(212, 175, 55, 0.35);
@@ -84,21 +84,22 @@ body {
   background: rgba(212, 175, 55, 0.65);
 }
 
-/* 4. Luxury SOC Cards & Surfaces */
+/* 4. Luxury Frosted Glass Cards & Surfaces */
 .soc-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--border-card);
-  border-radius: 12px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(12, 12, 20, 0.45);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
 .soc-card:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), 0 0 24px var(--accent-gold-glow), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  background: rgba(18, 18, 30, 0.58);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 18px 48px 0 rgba(0, 0, 0, 0.7), 0 0 28px var(--accent-gold-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* 5. Luxury Interactive Buttons */
