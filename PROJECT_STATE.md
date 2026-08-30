@@ -21,6 +21,7 @@ Code Cryptical IT Innovatives/
 ├── MEMORY.md                         # Permanent append-only log of all functionality and development decisions
 ├── PROJECT_STATE.md                  # Comprehensive reference manual for the entire project state and file registry
 ├── SOC_FINAL_REPORT.md               # Formal SOC monitoring report (Lab architecture, TTPs, Incident dossiers, Mitigations)
+├── SOC_FINAL_REPORT.pdf              # Publication-grade formatted PDF report (A4 printable executive document)
 ├── FRONTEND_DESIGN_SYSTEM.md         # Blueprint & replication manual for the SOC X luxury stealth glassmorphism design
 ├── UI Screenshots/                   # Full-resolution 1920x1080 PNG gallery (9 screens)
 ├── package.json                      # NPM dependencies, scripts, and build configuration
