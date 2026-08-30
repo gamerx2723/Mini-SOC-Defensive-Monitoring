@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UploadCloud, FileText, Check, AlertCircle, Sparkles } from 'lucide-react';
+import { UploadCloud, Check, Sparkles } from 'lucide-react';
 import { parseRawLogs } from '../engine/logParser';
 import { LogEvent } from '../types/soc';
 
@@ -55,48 +55,55 @@ export const LogIngestionModal: React.FC<LogIngestionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
-      <div className="glass-panel p-6 max-w-2xl w-full border-cyan-500/60 shadow-[0_0_40px_rgba(0,240,255,0.25)]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+      <div className="soc-card p-6 md:p-8 max-w-2xl w-full border-neutral-700 shadow-[0_0_60px_rgba(0,0,0,0.95)]">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-cyan-500/30 mb-4">
-          <div className="flex items-center gap-2">
-            <UploadCloud className="w-5 h-5 text-cyan-400" />
-            <h2 className="text-base font-display font-black text-cyan-400 text-glow-cyan tracking-wider">
-              RAW LOG INGESTION & SIEM PARSER
-            </h2>
+        <div className="flex items-center justify-between pb-4 border-b border-neutral-800 mb-5">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+              <UploadCloud className="w-5 h-5 text-amber-400" />
+            </div>
+            <div>
+              <h2 className="text-base font-display font-bold text-white tracking-wider">
+                Raw Log Telemetry Ingestion
+              </h2>
+              <span className="text-xs font-mono text-neutral-400">
+                Universal Parser (Syslog, Combined Nginx, Nmap, JSON)
+              </span>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-rose-400 font-mono text-lg font-bold px-2"
+            className="text-neutral-400 hover:text-white font-mono text-xl font-bold px-2 py-1"
           >
             ✕
           </button>
         </div>
 
-        <p className="text-xs font-mono text-slate-300 mb-3">
-          Paste raw Syslog, Apache/Nginx combined access logs, Splunk JSON, or load one of the attack presets below to feed directly into the SIEM correlator.
+        <p className="text-xs text-neutral-300 mb-4 font-mono">
+          Paste multi-format security logs or select an authorized preset payload to ingest into the SIEM correlation pipeline:
         </p>
 
         {/* Presets */}
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" /> Quick Presets:
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <span className="text-[11px] font-mono text-neutral-400 flex items-center gap-1">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Presets:
           </span>
           <button
             onClick={() => handleApplyPreset('hydra')}
-            className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-rose-300 transition-all"
+            className="soc-btn soc-btn-silver !h-7 !px-3 !text-xs !text-rose-300"
           >
-            Hydra SSH Brute-Force Log
+            Hydra SSH Brute-Force
           </button>
           <button
             onClick={() => handleApplyPreset('juiceshop')}
-            className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300 transition-all"
+            className="soc-btn soc-btn-silver !h-7 !px-3 !text-xs !text-amber-300"
           >
-            Juice Shop SQLi / XSS Log
+            Juice Shop SQLi / XSS
           </button>
           <button
             onClick={() => handleApplyPreset('nmap_json')}
-            className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-cyan-300 transition-all"
+            className="soc-btn soc-btn-silver !h-7 !px-3 !text-xs !text-neutral-200"
           >
             Nmap Port Scan JSON
           </button>
@@ -112,21 +119,21 @@ export const LogIngestionModal: React.FC<LogIngestionModalProps> = ({
             const count = parseRawLogs(e.target.value).length;
             setParsedPreviewCount(count);
           }}
-          className="w-full bg-slate-950 p-3 rounded-lg border border-slate-700 font-mono text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-400 transition-all leading-relaxed"
+          className="w-full bg-neutral-950 p-4 rounded-xl border border-neutral-800 font-mono text-xs text-neutral-200 placeholder-neutral-600 focus:outline-none focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/30 transition-all leading-relaxed"
         />
 
         {parsedPreviewCount !== null && (
-          <div className="flex items-center gap-2 mt-2 text-xs font-mono text-emerald-400">
+          <div className="flex items-center gap-2 mt-3 text-xs font-mono text-emerald-400">
             <Check className="w-4 h-4" />
-            <span>Parser parsed {parsedPreviewCount} valid security events ready for ingestion</span>
+            <span>Parser parsed {parsedPreviewCount} security events ready for ingestion</span>
           </div>
         )}
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3 pt-4 mt-3 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-5 mt-4 border-t border-neutral-800">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded text-xs font-mono text-slate-400 hover:text-slate-200"
+            className="soc-btn soc-btn-silver !h-9 !px-5 text-xs"
           >
             CANCEL
           </button>
@@ -134,9 +141,9 @@ export const LogIngestionModal: React.FC<LogIngestionModalProps> = ({
           <button
             onClick={handleParseAndSubmit}
             disabled={!logText.trim()}
-            className="cyber-btn !px-5 !py-2.5"
+            className="soc-btn soc-btn-gold !h-9 !px-6"
           >
-            <UploadCloud className="w-4 h-4" />
+            <UploadCloud className="w-4 h-4 mr-1.5" />
             <span>INGEST & CORRELATE</span>
           </button>
         </div>

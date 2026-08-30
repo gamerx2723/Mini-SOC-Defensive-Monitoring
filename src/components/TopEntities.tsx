@@ -1,6 +1,6 @@
 import React from 'react';
-import { LogEvent, EntityCount } from '../types/soc';
-import { Users, Crosshair, ShieldAlert, Globe } from 'lucide-react';
+import { LogEvent } from '../types/soc';
+import { Users, Crosshair, Globe } from 'lucide-react';
 
 interface TopEntitiesProps {
   events: LogEvent[];
@@ -40,45 +40,44 @@ export const TopEntities: React.FC<TopEntitiesProps> = ({ events }) => {
     .slice(0, 5);
 
   const maxIpCount = topIps[0]?.count || 1;
-  const maxUserCount = topUsers[0]?.count || 1;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
       {/* Top Source IPs */}
-      <div className="glass-panel p-4 flex flex-col">
-        <div className="flex items-center justify-between pb-2.5 border-b border-cyan-500/20 mb-3">
-          <div className="flex items-center gap-2">
-            <Crosshair className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-xs font-display font-bold text-slate-100 uppercase tracking-wider">
-              Top Source IPs & Threat Vectors
+      <div className="soc-card p-5 lg:p-6 flex flex-col">
+        <div className="flex items-center justify-between pb-3 border-b border-neutral-800 mb-4">
+          <div className="flex items-center gap-2.5">
+            <Crosshair className="w-4 h-4 text-amber-400" />
+            <h3 className="text-xs font-display font-bold text-white tracking-wider uppercase">
+              Top Threat Origin IPs
             </h3>
           </div>
-          <span className="text-[10px] font-mono text-slate-400">RANKED BY VOLUME</span>
+          <span className="text-[10px] font-mono text-neutral-400">BY VOLUME</span>
         </div>
 
-        <div className="space-y-2.5 flex-1">
+        <div className="space-y-3.5 flex-1">
           {topIps.map((ip, idx) => {
             const percentage = Math.round((ip.count / maxIpCount) * 100);
             return (
-              <div key={ip.name} className="space-y-1">
+              <div key={ip.name} className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs font-mono">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-slate-500 w-3">#{idx + 1}</span>
-                    <span className={`font-semibold ${ip.isMalicious ? 'text-rose-400 font-bold' : 'text-slate-200'}`}>
+                    <span className="text-[10px] font-bold text-neutral-500 w-3">#{idx + 1}</span>
+                    <span className={`font-semibold ${ip.isMalicious ? 'text-rose-400' : 'text-neutral-200'}`}>
                       {ip.name}
                     </span>
-                    <span className="text-[10px] text-slate-500 flex items-center gap-1">
-                      <Globe className="w-2.5 h-2.5 inline" /> {ip.country}
+                    <span className="text-[10px] text-neutral-400 flex items-center gap-1">
+                      <Globe className="w-2.5 h-2.5 inline text-neutral-500" /> {ip.country}
                     </span>
                   </div>
-                  <span className="text-cyan-400 font-bold">{ip.count} events</span>
+                  <span className="text-white font-bold">{ip.count} events</span>
                 </div>
-                <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+                <div className="w-full bg-neutral-900 rounded-full h-1.5 overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all ${
                       ip.isMalicious
                         ? 'bg-gradient-to-r from-amber-500 to-rose-500'
-                        : 'bg-gradient-to-r from-cyan-600 to-cyan-400'
+                        : 'bg-gradient-to-r from-neutral-600 via-amber-400 to-white'
                     }`}
                     style={{ width: `${percentage}%` }}
                   />
@@ -90,34 +89,33 @@ export const TopEntities: React.FC<TopEntitiesProps> = ({ events }) => {
       </div>
 
       {/* Top Target Usernames */}
-      <div className="glass-panel p-4 flex flex-col">
-        <div className="flex items-center justify-between pb-2.5 border-b border-cyan-500/20 mb-3">
-          <div className="flex items-center gap-2">
+      <div className="soc-card p-5 lg:p-6 flex flex-col">
+        <div className="flex items-center justify-between pb-3 border-b border-neutral-800 mb-4">
+          <div className="flex items-center gap-2.5">
             <Users className="w-4 h-4 text-amber-400" />
-            <h3 className="text-xs font-display font-bold text-slate-100 uppercase tracking-wider">
-              Top Usernames Targeted / Active
+            <h3 className="text-xs font-display font-bold text-white tracking-wider uppercase">
+              Targeted Accounts
             </h3>
           </div>
-          <span className="text-[10px] font-mono text-slate-400">AUTH CORRELATION</span>
+          <span className="text-[10px] font-mono text-neutral-400">CORRELATION</span>
         </div>
 
-        <div className="space-y-2.5 flex-1">
+        <div className="space-y-3.5 flex-1">
           {topUsers.map((u, idx) => {
-            const percentage = Math.round((u.count / maxUserCount) * 100);
             return (
-              <div key={u.name} className="space-y-1">
+              <div key={u.name} className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs font-mono">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-slate-500 w-3">#{idx + 1}</span>
-                    <span className="text-slate-200 font-semibold">{u.name}</span>
+                    <span className="text-[10px] font-bold text-neutral-500 w-3">#{idx + 1}</span>
+                    <span className="text-neutral-200 font-semibold">{u.name}</span>
                   </div>
                   <div className="flex items-center gap-2 text-[10px]">
                     <span className="text-rose-400 font-bold">{u.failed} fail</span>
-                    <span className="text-slate-600">/</span>
+                    <span className="text-neutral-600">/</span>
                     <span className="text-emerald-400 font-bold">{u.success} ok</span>
                   </div>
                 </div>
-                <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden flex">
+                <div className="w-full bg-neutral-900 rounded-full h-1.5 overflow-hidden flex">
                   <div
                     className="h-full bg-rose-500 transition-all"
                     style={{ width: `${(u.failed / (u.count || 1)) * 100}%` }}

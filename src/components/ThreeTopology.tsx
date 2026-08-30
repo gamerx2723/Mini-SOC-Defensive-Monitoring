@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { AssetNode } from '../types/soc';
-import { Shield, Server, Database, Activity, AlertTriangle } from 'lucide-react';
+import { Shield, Activity, AlertTriangle } from 'lucide-react';
 
 interface ThreeTopologyProps {
   assets: AssetNode[];
@@ -10,7 +10,7 @@ interface ThreeTopologyProps {
 
 export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAsset }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [selectedAsset, setSelectedAsset] = useState<AssetNode | null>(assets[2] || null); // Default Juice Shop
+  const [selectedAsset, setSelectedAsset] = useState<AssetNode | null>(assets[2] || null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const frameIdRef = useRef<number>(0);
@@ -36,8 +36,8 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
     const topGroup = new THREE.Group();
     scene.add(topGroup);
 
-    // 1. Grid plane
-    const gridHelper = new THREE.GridHelper(14, 20, 0x00f0ff, 0x072b4f);
+    // 1. Grid plane (Gold & Dark Charcoal)
+    const gridHelper = new THREE.GridHelper(14, 20, 0xd4af37, 0x1c1c28);
     gridHelper.position.y = -2;
     topGroup.add(gridHelper);
 
@@ -46,16 +46,16 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
 
     assets.forEach((asset) => {
       const isAttacked = asset.status === 'UNDER_ATTACK';
-      const colorHex = isAttacked ? 0xff0055 : (asset.role === 'FIREWALL' ? 0x00f0ff : 0x00ff88);
+      const colorHex = isAttacked ? 0xff3366 : (asset.role === 'FIREWALL' ? 0xd4af37 : 0xe2e8f0);
 
-      // Main Node Cube/Octahedron
+      // Main Node Octahedron
       const geo = new THREE.OctahedronGeometry(0.55);
       const mat = new THREE.MeshStandardMaterial({
         color: colorHex,
         emissive: colorHex,
-        emissiveIntensity: 0.4,
+        emissiveIntensity: 0.45,
         roughness: 0.2,
-        metalness: 0.8
+        metalness: 0.85
       });
       const mesh = new THREE.Mesh(geo, mat);
       mesh.position.set(...asset.position3D);
@@ -67,7 +67,7 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
         color: colorHex,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: isAttacked ? 0.8 : 0.3
+        opacity: isAttacked ? 0.85 : 0.25
       });
       const halo = new THREE.Mesh(haloGeo, haloMat);
       halo.position.set(...asset.position3D);
@@ -77,7 +77,7 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
       nodeMeshes.push({ mesh, halo, asset });
     });
 
-    // 3. Topology Connections (Lines between firewall -> dmz -> apps -> db)
+    // 3. Topology Connections (Gold Lines)
     const connections: [number, number][] = [
       [0, 1], // Firewall -> DMZ Proxy
       [1, 2], // DMZ -> Juice Shop App
@@ -95,20 +95,20 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
 
       const lineGeo = new THREE.BufferGeometry().setFromPoints([p1, p2]);
       const lineMat = new THREE.LineBasicMaterial({
-        color: 0x00f0ff,
+        color: 0xd4af37,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.4,
         linewidth: 1
       });
       const line = new THREE.Line(lineGeo, lineMat);
       topGroup.add(line);
     });
 
-    // 4. Lighting
-    const ambLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // 4. Lighting (Warm Gold Light)
+    const ambLight = new THREE.AmbientLight(0xffffff, 0.65);
     scene.add(ambLight);
 
-    const pointLight = new THREE.PointLight(0x00f0ff, 2, 50);
+    const pointLight = new THREE.PointLight(0xd4af37, 2.2, 50);
     pointLight.position.set(0, 5, 5);
     scene.add(pointLight);
 
@@ -152,24 +152,24 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
   }, [assets]);
 
   return (
-    <div className="relative w-full h-[360px] glass-panel overflow-hidden flex flex-col">
-      <div className="w-full h-full" ref={containerRef} />
+    <div className="relative w-full h-[400px] soc-card overflow-hidden flex flex-col p-2">
+      <div className="w-full h-full rounded-lg overflow-hidden" ref={containerRef} />
 
       {/* Header Overlay */}
-      <div className="absolute top-3 left-4 pointer-events-none flex flex-col gap-1">
+      <div className="absolute top-4 left-5 pointer-events-none flex flex-col gap-1">
         <div className="flex items-center gap-2">
           <Activity className="w-4 h-4 text-emerald-400 animate-pulse" />
-          <span className="text-xs font-display tracking-widest text-emerald-400 font-semibold uppercase">
-            3D Cyber Defense Grid & Asset Topology
+          <span className="text-xs font-display tracking-widest text-emerald-400 font-bold uppercase">
+            3D Defense Grid & Topology
           </span>
         </div>
-        <span className="text-[11px] font-mono text-slate-400">
+        <span className="text-[11px] font-mono text-neutral-400">
           Segment: VLAN-10.0.0.0/24 (DMZ & Internal Cluster)
         </span>
       </div>
 
       {/* Asset Selector / Status card overlay */}
-      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 overflow-x-auto p-2 bg-slate-950/80 rounded-lg border border-cyan-500/20 backdrop-blur-md">
+      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 overflow-x-auto p-2.5 bg-neutral-950/85 rounded-xl border border-neutral-800 backdrop-blur-md">
         {assets.map((asset) => {
           const isSelected = selectedAsset?.id === asset.id;
           const isUnderAttack = asset.status === 'UNDER_ATTACK';
@@ -181,23 +181,23 @@ export const ThreeTopology: React.FC<ThreeTopologyProps> = ({ assets, onSelectAs
                 setSelectedAsset(asset);
                 if (onSelectAsset) onSelectAsset(asset);
               }}
-              className={`flex-1 min-w-[120px] text-left p-2 rounded transition-all border ${
+              className={`flex-1 min-w-[130px] text-left p-2.5 rounded-lg transition-all border ${
                 isSelected
-                  ? 'bg-cyan-500/20 border-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.3)]'
+                  ? 'bg-amber-500/15 border-amber-400 shadow-[0_0_15px_rgba(212,175,55,0.25)]'
                   : isUnderAttack
-                  ? 'bg-rose-950/40 border-rose-500/40 hover:border-rose-400'
-                  : 'bg-slate-900/60 border-slate-700/50 hover:border-cyan-500/50'
+                  ? 'bg-rose-950/30 border-rose-500/40 hover:border-rose-400'
+                  : 'bg-neutral-900/60 border-neutral-800 hover:border-neutral-600'
               }`}
             >
               <div className="flex items-center justify-between text-[11px] font-mono mb-1">
-                <span className="font-semibold text-slate-200 truncate">{asset.name}</span>
+                <span className="font-semibold text-neutral-200 truncate">{asset.name}</span>
                 {isUnderAttack ? (
                   <AlertTriangle className="w-3.5 h-3.5 text-rose-400 animate-bounce" />
                 ) : (
                   <Shield className="w-3.5 h-3.5 text-emerald-400" />
                 )}
               </div>
-              <div className="text-[10px] font-mono text-slate-400 flex justify-between">
+              <div className="text-[10px] font-mono text-neutral-400 flex justify-between">
                 <span>{asset.ip}</span>
                 <span className={isUnderAttack ? 'text-rose-400 font-bold' : 'text-emerald-400'}>
                   {asset.status}

@@ -1,13 +1,14 @@
-# Mini Security Operations Center (SOC) - Project State & Architecture
+# SOC X - Defensive Security Operations Center // Architecture & Manual
 
-**Last Updated**: 2026-08-30
-**System Classification**: Defensive Cybersecurity Monitoring & Threat Detection Platform
-**Interface Tier**: Futuristic Glassmorphism 3D Cyber HUD Command Center
+**Last Updated**: 2026-08-30 (SOC X Luxury Redesign)
+**System Classification**: Defensive Cybersecurity Operations & SIEM Threat Detection Platform
+**Interface Tier**: Luxury Stealth Black / Metallic Silver / Champagne Gold 3D Command Center
+**Active Runtime Status**: Live at `http://localhost:3000/`
 
 ---
 
 ## 1. Project Overview
-The Mini SOC is an enterprise-grade defensive security monitoring and threat correlation platform. It ingests network, server, authentication, and application telemetry in real time, applies behavioral detection rules against modern cyber attack tactics (MITRE ATT&CK mapped), and presents live actionable intelligence via an interactive 3D Cyber Command Center.
+**SOC X** is an enterprise-grade defensive security monitoring and threat correlation platform. It ingests network, server, authentication, and application telemetry in real time, applies behavioral detection rules against modern cyber attack tactics (MITRE ATT&CK mapped), and presents live actionable intelligence via a spacious, luxury 3D Cyber Command Center featuring an interactive particle constellation canvas and custom precision cursor.
 
 ---
 
@@ -21,11 +22,11 @@ Code Cryptical IT Innovatives/
 ├── vite.config.ts                    # Vite build system configuration with plugins and dev server settings
 ├── tsconfig.json                     # TypeScript strict mode and path configuration
 ├── tsconfig.node.json                # TypeScript node configuration for Vite tooling
-├── index.html                        # Main HTML entry with Orbitron & Inter Google typography and Cyber styling
+├── index.html                        # Main HTML entry with Space Grotesk, Syne, Inter typography & SOC X branding
 ├── src/
 │   ├── main.tsx                      # React root entry point and error boundaries
-│   ├── App.tsx                       # Main SOC Command Center layout, state orchestrator, and real-time feeds
-│   ├── index.css                     # Cyberpunk design system, glassmorphism tokens, neon glow shaders, animations
+│   ├── App.tsx                       # SOC X layout, state orchestrator, custom cursor & interactive background
+│   ├── index.css                     # Luxury Black/Grey/Silver/White/Gold design system, cards, badges, buttons
 │   ├── types/
 │   │   └── soc.ts                    # TypeScript models for Logs, DetectionRules, Alerts, Metrics, AttackVectors
 │   ├── engine/
@@ -33,18 +34,21 @@ Code Cryptical IT Innovatives/
 │   │   ├── logParser.ts              # Multi-format parser for Syslog, Apache/Nginx, Nmap, Zeek/Wireshark, Suricata
 │   │   └── sampleDataGenerator.ts    # Authentic multi-source security event corpus & streaming attack generator
 │   └── components/
-│       ├── Header.tsx                # Cyber SOC status bar, real-time threat index gauge, live telemetry clock
-│       ├── MetricsOverview.tsx       # 5 core glassmorphism metric cards (Total, Failed, Success, Suspicious, Risk)
-│       ├── ThreeGlobe.tsx            # Interactive 3D Threat Globe with animated attack arcs, geo-markers, particle core
+│       ├── CustomCursor.tsx          # Dual-layer interactive cyber cursor (gold dot + trailing silver magnetic ring)
+│       ├── InteractiveBackground.tsx # HTML5 Canvas interactive particle constellation with proximity hover links
+│       ├── Header.tsx                # SOC X status bar, threat index score, live telemetry controls & navigation
+│       ├── MetricsOverview.tsx       # 5 luxury metric cards (Total Events, Failed, Success, Suspicious, Risk Score)
+│       ├── ThreeGlobe.tsx            # 3D Threat Globe with gold & silver continent particles and ballistic attack arcs
 │       ├── ThreeTopology.tsx         # 3D Asset Topology visualizer (Firewall, DMZ, Juice Shop, DB, SIEM)
 │       ├── SecurityAnalysisPanel.tsx # Security analysis engine status, triggered rules, and threat severity filter
 │       ├── EventTimeline.tsx         # Real-time event log stream with search, protocol filters, and raw payload inspect
 │       ├── HttpDnsInspector.tsx      # HTTP/DNS deep-dive packet inspection (OWASP & DNS tunneling telemetry)
 │       ├── TopEntities.tsx           # Bar rankings for Top Source IPs, Target Usernames, and Port Targets
-│       ├── AttackSimulatorModal.tsx  # Kali Linux attack simulation suite (Nmap, Hydra, Juice Shop SQLi, DGA)
-│       ├── LogIngestionModal.tsx     # Custom raw log ingestion modal supporting Syslog, Apache, JSON, and PCAP summaries
+│       ├── AttackSimulatorModal.tsx  # Kali Linux attack simulation suite (Nmap, Hydra, Juice Shop SQLi, DNS Tunnel)
+│       ├── LogIngestionModal.tsx     # Custom raw log ingestion modal supporting Syslog, Apache, JSON, and presets
 │       └── IncidentPlaybookModal.tsx # Incident response modal with containment playbooks (Block IP, Host Isolation)
 ```
+
 
 ---
 
