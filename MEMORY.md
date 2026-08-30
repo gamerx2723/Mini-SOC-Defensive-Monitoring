@@ -174,6 +174,20 @@
   8. `08_Command_Center_Scrolled_Analytics_Timeline.png`: Scrolled view showing correlated alerts and live table.
   9. `09_Event_Forensics_Payload_Inspector_Modal.png`: Deep payload and raw log line forensic inspection popup.
 
+---
+
+## [2026-08-30T22:05:00Z] - Animated README & Official Checkpoint 2 Tag Created
+- **Animated README (`README.md`)**:
+  - Gold and silver luxury shields.io badges (GitHub Stars, MIT License, MITRE ATT&CK Mapped, Three.js, React 18, Status).
+  - Animated typing SVG banner showcasing key capabilities.
+  - Multi-screen screenshot showcases from `UI Screenshots/`.
+  - Architecture breakdown, detection matrix, tools overview, and quick-start instructions.
+- **CHECKPOINT 2 CREATED (`CHECKPOINT-V2.0.0-SOC-X-LUXURY-EDITION`)**:
+  - **Tag**: `CHECKPOINT-V2.0.0-SOC-X-LUXURY-EDITION`
+  - **State Summary**: Complete SOC X Luxury Edition with self-contained Vanilla CSS, unzoomed Three.js 3D Threat Globe & Defense Grid, luminous frosted glassmorphism, interactive particle background, custom cyber cursor, 9 UI screenshots, formal SOC Final Report (`SOC_FINAL_REPORT.md`), and Frontend Design System Blueprint (`FRONTEND_DESIGN_SYSTEM.md`).
+  - **Rollback Guarantee**: This tag marks the stable, validated second checkpoint of the entire system.
+
+
 
 
 

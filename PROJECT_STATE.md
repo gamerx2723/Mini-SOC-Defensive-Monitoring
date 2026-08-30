@@ -1,8 +1,9 @@
 # SOC X - Defensive Security Operations Center // Architecture & Manual
 
-**Last Updated**: 2026-08-30 (SOC X Luxury Redesign)
+**Last Updated**: 2026-08-30 (Checkpoint 2: SOC X Luxury Release)
 **System Classification**: Defensive Cybersecurity Operations & SIEM Threat Detection Platform
 **Interface Tier**: Luxury Stealth Black / Metallic Silver / Champagne Gold 3D Command Center
+**Checkpoint Version**: `CHECKPOINT-V2.0.0-SOC-X-LUXURY-EDITION`
 **Active Runtime Status**: Live at `http://localhost:3000/`
 
 ---
@@ -16,10 +17,12 @@
 
 ```
 Code Cryptical IT Innovatives/
+├── README.md                         # Animated GitHub showcase with badges, architecture, and live screenshots
 ├── MEMORY.md                         # Permanent append-only log of all functionality and development decisions
 ├── PROJECT_STATE.md                  # Comprehensive reference manual for the entire project state and file registry
 ├── SOC_FINAL_REPORT.md               # Formal SOC monitoring report (Lab architecture, TTPs, Incident dossiers, Mitigations)
 ├── FRONTEND_DESIGN_SYSTEM.md         # Blueprint & replication manual for the SOC X luxury stealth glassmorphism design
+├── UI Screenshots/                   # Full-resolution 1920x1080 PNG gallery (9 screens)
 ├── package.json                      # NPM dependencies, scripts, and build configuration
 ├── vite.config.ts                    # Vite build system configuration with plugins and dev server settings
 ├── tsconfig.json                     # TypeScript strict mode and path configuration
