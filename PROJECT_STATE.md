@@ -18,6 +18,8 @@
 Code Cryptical IT Innovatives/
 ├── MEMORY.md                         # Permanent append-only log of all functionality and development decisions
 ├── PROJECT_STATE.md                  # Comprehensive reference manual for the entire project state and file registry
+├── SOC_FINAL_REPORT.md               # Formal SOC monitoring report (Lab architecture, TTPs, Incident dossiers, Mitigations)
+├── FRONTEND_DESIGN_SYSTEM.md         # Blueprint & replication manual for the SOC X luxury stealth glassmorphism design
 ├── package.json                      # NPM dependencies, scripts, and build configuration
 ├── vite.config.ts                    # Vite build system configuration with plugins and dev server settings
 ├── tsconfig.json                     # TypeScript strict mode and path configuration
